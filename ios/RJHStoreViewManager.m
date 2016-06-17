@@ -7,6 +7,22 @@
 @implementation RJHStoreViewManager
 @synthesize bridge = _bridge;
 
+
+UIViewController *__nullable RCTPresentedViewController(void)
+{
+    if (RCTRunningInAppExtension()) {
+        return nil;
+    }
+
+    UIViewController *controller = RCTKeyWindow().rootViewController;
+
+    while (controller.presentedViewController) {
+        controller = controller.presentedViewController;
+    }
+
+    return controller;
+}
+
 RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(loadProductWithParameters:(NSDictionary *)args callback: (RCTResponseSenderBlock)callback)
